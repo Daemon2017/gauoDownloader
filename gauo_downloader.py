@@ -6,8 +6,8 @@ from urllib.error import URLError
 from time import sleep
 from requests.exceptions import ChunkedEncodingError
 
-f_s = 967
-f_e = 967
+f_s = 752
+f_e = 752
 o_s = 1
 o_e = 5
 page_s = 0
@@ -33,7 +33,7 @@ for f in range(f_s, f_e + 1):
                         print('Файл существует!')
                         filename = wget.download(url.format(f, o, page),
                                                  out='{}{}_{}_{}.jpg'.format(images_dir, f, o, page))
-                        sleep(0.25)
+                        sleep(0.5)
                     else:
                         print('Файл не существует!')
                         break
