@@ -6,10 +6,10 @@ from urllib.error import URLError
 from time import sleep
 from requests.exceptions import ChunkedEncodingError
 
-f_s = 752
-f_e = 752
+f_s = 122
+f_e = 122
 o_s = 1
-o_e = 5
+o_e = 100
 page_s = 0
 page_e = 1000
 
@@ -40,7 +40,10 @@ for f in range(f_s, f_e + 1):
                 except ConnectionError as CE:
                     print(CE)
                     error_count = error_count + 1
-                except ChunkedEncodingError as CEE:
+                except requests.exceptions.ConnectionError as RECE:
+                    print(RECE)
+                    error_count = error_count + 1
+                except requests.exceptions.ChunkedEncodingError as CEE:
                     print(CEE)
                     error_count = error_count + 1
                 except URLError as UE:
