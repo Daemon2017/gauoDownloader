@@ -6,10 +6,10 @@ from urllib.error import URLError
 from time import sleep
 from requests.exceptions import ChunkedEncodingError
 
-f_s = 122
-f_e = 122
+f_s = 45
+f_e = 45
 o_s = 1
-o_e = 100
+o_e = 5
 page_s = 0
 page_e = 1000
 
