@@ -2,23 +2,31 @@ import requests
 import wget
 import os
 
+from urllib.parse import quote
 from urllib.error import URLError
 from time import sleep
 
-f_s = 322
-f_e = 322
+f_s = 1
+f_e = 1
 o_s = 1
 o_e = 10
 page_s = 0
 page_e = 1000
+is_soviet = False
 
-url = 'http://www.ogugauo.ru/funds/image.php?f={}&o={}&page={}'
+url = 'http://www.ogugauo.ru/funds/image.php?f={}{}&o={}&page={}'
 images_dir = './images/'
 
 
 def main():
     if not os.path.exists(images_dir):
         os.makedirs(images_dir)
+
+    prefix = ''
+    extension = 'jpg'
+    if is_soviet:
+        prefix = 'Р-'
+        extension = 'png'
 
     error_count = 0
     for f in range(f_s, f_e + 1):
@@ -27,13 +35,13 @@ def main():
             print('o:={}'.format(o))
             for page in range(page_s, page_e + 1):
                 print('\npage:={}'.format(page))
-                if not os.path.exists('{}{}_{}_{}.jpg'.format(images_dir, f, o, page)):
+                if not os.path.exists('{}{}{}_{}_{}.{}'.format(images_dir, prefix, f, o, page, extension)):
                     try:
-                        response = requests.request('GET', url.format(f, o, page))
+                        response = requests.request('GET', url.format(quote(prefix), f, o, page))
                         if len(response.content) > 10:
                             print('Файл существует, загружаю!')
-                            wget.download(url.format(f, o, page),
-                                          out='{}{}_{}_{}.jpg'.format(images_dir, f, o, page))
+                            wget.download(url.format(quote(prefix), f, o, page),
+                                          out='{}{}{}_{}_{}.{}'.format(images_dir, prefix, f, o, page, extension))
                             sleep(0.5)
                         else:
                             print('Файл не существует, нечего загружать!')
